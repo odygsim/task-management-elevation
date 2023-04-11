@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Task, TaskStatus } from './task.model';
 import { v4 as uuidv4 } from 'uuid';
 import { CreateTaskDto } from './dto/create-task.dto';
@@ -42,16 +42,22 @@ export class TasksService {
   }
 
   async getTaskById(id: string): Promise<Task> {
-    return this.tasks.find((task) => task.id === id);
+    const found = this.tasks.find((task) => task.id === id);
+
+    if (!found) throw new NotFoundException(`Task with id ${id} was not found`);
+
+    return found;
   }
 
   async deleteTaskById(id: string): Promise<void> {
-    this.tasks = this.tasks.filter((task) => task.id !== id);
+    const found = await this.getTaskById(id);
+    this.tasks = this.tasks.filter((task) => task.id !== found.id);
   }
 
   async updateTaskStatus(id: string, status: TaskStatus): Promise<Task> {
     const task: Task = await this.getTaskById(id);
 
+    console.log('here');
     task.status = status;
 
     return task;
