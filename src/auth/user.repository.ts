@@ -17,6 +17,7 @@ export class UserRepository extends Repository<User> {
 
   async signUp(authCredentialsDto: AuthCredentialsDto): Promise<void> {
     const { username, password } = authCredentialsDto;
+    console.log(username, password);
 
     const salt = await bcrypt.genSalt();
 
@@ -31,6 +32,7 @@ export class UserRepository extends Repository<User> {
     } catch (error) {
       if (error.code === '23505')
         throw new ConflictException('Username already exists');
+      console.log(error);
       throw new InternalServerErrorException();
     }
   }
