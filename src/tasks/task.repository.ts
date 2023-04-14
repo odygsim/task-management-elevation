@@ -30,7 +30,6 @@ export class TaskRepository extends Repository<Task> {
     const query = this.createQueryBuilder('task'); // keyword to refer to task entity
 
     if (status) query.andWhere('task.status = :status', { status });
-    console.log(status);
     if (search)
       query.andWhere(
         '(task.title LIKE :search OR task.description LIKE :search)',

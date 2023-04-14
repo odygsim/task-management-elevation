@@ -26,7 +26,6 @@ export class User extends BaseEntity {
     const hash = await bcrypt.hash(password, this.salt);
 
     const result = hash === this.password;
-    console.log(result);
     return result;
   }
 }
