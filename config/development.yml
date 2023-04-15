@@ -1,0 +1,8 @@
+db:
+  host: 'localhost'
+  username: 'odysseas'
+  password: 'Mekonia!'
+  synchronize: true
+
+jwt:
+  secret: 'TopSecret51'
